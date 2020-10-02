@@ -7,6 +7,7 @@ Circle::Circle(double r)
 {
 	assert(r >= 0);
 	radius = r;
+	type = 0;
 }
 
 Circle::~Circle()
@@ -24,6 +25,7 @@ Elips::Elips(double r1, double r2)
 	assert(r1 >= 0 && r2 >= 0);
 	radius1 = r1;
 	radius2 = r2;
+	type = 1;
 }
 
 Elips::~Elips()
