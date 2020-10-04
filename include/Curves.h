@@ -7,6 +7,7 @@ protected:
 public:
     virtual float Calculate_area() = 0;
     int Get_type() { return type; }
+    virtual ~Curves();
 };
 
 class Circle : public Curves
