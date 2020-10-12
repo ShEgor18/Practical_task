@@ -14,6 +14,18 @@ Circle::Circle(double r)
 	type = 0;
 }
 
+void Circle::SetRadius(const double r)
+{
+	this->radius = r;
+}
+
+double Circle::GetRadius()
+{
+	return this->radius;
+}
+
+
+
 Circle::~Circle()
 {
 	
@@ -32,8 +44,29 @@ Elips::Elips(double r1, double r2)
 	type = 1;
 }
 
+void Elips::SetMinorRadius(const double r1)
+{
+	this->radius1 = r1;
+}
+
+void Elips::SetMajorRadius(const double r2)
+{
+	this->radius2 = r2;
+}
+
+double Elips::GetMinorRadius()
+{
+	return this->radius1;
+}
+
+double Elips::GetMajorRadius()
+{
+	return this->radius2;
+}
+
 Elips::~Elips()
 {
+
 }
 
 float Elips::Calculate_area()

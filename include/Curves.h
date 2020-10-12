@@ -16,6 +16,8 @@ private:
     double radius;
 public:
     Circle(double r);
+    void SetRadius(const double r);
+    double GetRadius();
     ~Circle();
     float Calculate_area();
 };
@@ -26,6 +28,10 @@ private:
     double radius1, radius2;
 public:
     Elips(double r1, double r2);
+    void SetMinorRadius(const double r1);
+    void SetMajorRadius(const double r2);
+    double GetMinorRadius();
+    double GetMajorRadius();
     ~Elips();
     float Calculate_area();
 };
