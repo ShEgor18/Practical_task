@@ -1,65 +1,57 @@
 #include <algorithm>
 #include <ctime>
+#include <random>
 #include <iomanip>
 #include <iostream>
 #include <vector>
 #include "Curves.h"
-#define sizeVector 10
-using namespace std;
-
-Circle* newCircle()
-{
-	Circle* tmp = new Circle(rand()%100);
-	return tmp;
-}
-Elips* newElips()
-{
-	Elips* tmp = new Elips(rand() % 100, rand() % 100);
-	return tmp;
-}
+#include "Circle.h"
+#include "Elips.h"
 
 int main()
 {
-	setlocale(LC_ALL, "Russian");
+	system("chcp 1251>nul");
+	std::mt19937 random;
+	random.seed(static_cast<unsigned int>(time(0)));
+	const int sizeVector = 12;
 	float Total_area_of_all_circles = 0;
 	float Total_area_of_all_ellipses = 0;
 	int count_circles = 0;
 	int count_ellipses = 0;
-	srand(time(0));
 
 	//Рандомно заполняем вектор кривыми
-	vector<Curves*> vector = {};
-	cout << "Создаем фигуры: " << endl;
+	std::vector<std::unique_ptr<Curves>> vectorFigures(sizeVector);
+	std::cout << "Создаем фигуры: " << std::endl;
 	for (int i = 0; i < sizeVector; i++)
 	{
 		Curves* tmp;
 		if (rand() % 2 == 0)
-			tmp = newCircle();
+			vectorFigures.at(i) = std::make_unique<Circle>(Circle(static_cast<double>(rand() % 100)));
 		else
-			tmp = newElips();
-		vector.push_back(tmp);
-		cout << tmp->Calculate_area() << " ";
+			vectorFigures.at(i) = std::make_unique<Elips>(Elips(static_cast<double>(rand() % 100), static_cast<double>(rand() % 100)));
+
+		std::cout << vectorFigures.at(i)->Calculate_area() << " ";
 	}
 	//--------------------------------------//
 
 	//Сортируем кривые по занимаемой площади
-	sort(vector.begin(), vector.end(), [](Curves* c1, Curves* c2) -> bool { return c1->Calculate_area() < c2->Calculate_area(); });
-	cout << endl << endl;
+	std::sort(vectorFigures.begin(), vectorFigures.end(), [](std::unique_ptr<Curves>& c1, std::unique_ptr<Curves>& c2) -> bool { return c1->Calculate_area() < c2->Calculate_area(); });
+	std::cout << std::endl << std::endl;
 	//--------------------------------------//
 
 	//Выводим отсортированный вектор
-	cout << "Сортируем фигуры в порядке возрастания площадей: " << endl;
-	for (auto const& element : vector)
+	std::cout << "Сортируем фигуры в порядке возрастания площадей: " << std::endl;
+	for (auto const& element : vectorFigures)
 	{
-		cout << element->Calculate_area() << " ";
+		std::cout << element->Calculate_area() << " ";
 	}
-	cout << endl << endl;
+	std::cout << std::endl << std::endl;
 	//--------------------------------------//
 
 	//Считаем численные характеристики фигур 
-	for (auto const& element : vector)
+	for (auto const& element : vectorFigures)
 	{
-		if (element->Get_type() == 0)
+		if (typeid(*element) == typeid(Circle))
 		{
 			Total_area_of_all_circles += element->Calculate_area();
 			count_circles++;
@@ -73,20 +65,14 @@ int main()
 	//--------------------------------------//
 
 	//Выводим характеристики
-	cout << fixed << setprecision(2) << "Полная площадь всех окружностей: " << Total_area_of_all_circles << endl;
-	cout << "Кол-во окружностей: " << count_circles << endl;
-	cout << fixed << setprecision(2) << "Полная площадь всех элипсов: " << Total_area_of_all_ellipses << endl;
-	cout << "Кол-во элипсов: " << count_ellipses << endl;
-	cout << fixed << setprecision(2) << "Общая площадь всех фигур: " << Total_area_of_all_ellipses + Total_area_of_all_circles << endl;
+	std::cout << std::fixed << std::setprecision(2) << "Полная площадь всех окружностей: " << Total_area_of_all_circles << std::endl;
+	std::cout << "Кол-во окружностей: " << count_circles << std::endl;
+	std::cout << std::fixed << std::setprecision(2) << "Полная площадь всех элипсов: " << Total_area_of_all_ellipses << std::endl;
+	std::cout << "Кол-во элипсов: " << count_ellipses << std::endl;
+	std::cout << std::fixed << std::setprecision(2) << "Общая площадь всех фигур: " << Total_area_of_all_ellipses + Total_area_of_all_circles << std::endl;
 	//--------------------------------------//
 
 	//Освобождаем память
-	while (!vector.empty())
-	{
-		Curves* tmp = vector[vector.size()-1];
-		vector.pop_back();
-		delete tmp;
-	}
 	Total_area_of_all_circles = 0;
 	Total_area_of_all_ellipses = 0;
 	count_circles = 0;
