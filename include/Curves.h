@@ -3,10 +3,12 @@
 
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <Visitor.h>
 
 class Curves
 {
 public:
+    virtual void accept(Visitor& v) = 0;
     virtual float Calculate_area() = 0;
     virtual ~Curves();
 };

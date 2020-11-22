@@ -7,6 +7,11 @@ Circle::Circle(double r)
 	radius = r;
 }
 
+void Circle::accept(Visitor& v)
+{
+	v.visit(*this);
+}
+
 void Circle::SetRadius(const double r)
 {
 	this->radius = r;

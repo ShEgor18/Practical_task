@@ -8,6 +8,11 @@ Elips::Elips(double r1, double r2)
 	radius2 = r2;
 }
 
+void Elips::accept(Visitor& v)
+{
+	v.visit(*this);
+}
+
 void Elips::SetMinorRadius(const double r1)
 {
 	radius1 = r1;

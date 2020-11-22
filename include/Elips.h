@@ -9,6 +9,7 @@ private:
     double radius1, radius2;
 public:
     Elips(double r1, double r2);
+    void accept(Visitor& v) override;
     void SetMinorRadius(const double r1);
     void SetMajorRadius(const double r2);
     double GetMinorRadius() const;

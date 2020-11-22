@@ -7,6 +7,7 @@
 #include "Curves.h"
 #include "Circle.h"
 #include "Elips.h"
+#include <GetType.h>
 
 int main()
 {
@@ -51,7 +52,9 @@ int main()
 	//—читаем численные характеристики фигур 
 	for (auto const& element : vectorFigures)
 	{
-		if (typeid(*element) == typeid(Circle))
+		GetType visitor;
+		element->accept(visitor);
+		if (visitor.type == "Circle")
 		{
 			Total_area_of_all_circles += element->Calculate_area();
 			count_circles++;

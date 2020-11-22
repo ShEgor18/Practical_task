@@ -9,6 +9,7 @@ private:
     double radius;
 public:
     Circle(double r);
+    void accept(Visitor& v) override ;
     void SetRadius(const double r);
     double GetRadius() const;
     ~Circle();
